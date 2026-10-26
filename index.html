@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Palette From Image — Free Color Palette Extractor &amp; Picker | S3eidat Tools</title>
+<meta name="description" content="Extract a 5–12 color palette from any photo with k-means or median cut, pick exact pixels with a magnifier, copy hex, export CSS variables, JSON or a PNG swatch strip. Free and private.">
+<meta property="og:title" content="Palette From Image — free, private color palette extractor">
+<meta property="og:description" content="Get the colors of any photo, pick exact pixels, export CSS / JSON / PNG. Runs 100% in your browser.">
+<meta property="og:image" content="screenshot.png">
+<link rel="icon" href="kit/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="kit/kit.css">
+<link rel="stylesheet" href="app.css">
+<script src="kit/kit.js"></script>
+</head>
+<body data-tool="palette-from-image">
+<main class="s3-main">
+  <section class="s3-hero">
+    <h1>Palette From Image</h1>
+    <p>Pull a color palette out of any photo, or click the image to pick an exact pixel with a magnifier. Copy hex codes or export CSS, JSON or a PNG strip.</p>
+  </section>
+
+  <div class="pl-grid">
+    <section class="card stack">
+      <div class="row between">
+        <h2>Image</h2>
+        <label class="btn ghost small" id="change" hidden><svg class="i"><use href="#i-image"/></svg>Change image<input type="file" accept="image/*" hidden></label>
+      </div>
+      <label class="drop" id="drop">
+        <input type="file" accept="image/*" hidden>
+        <svg class="i"><use href="#i-image"/></svg>
+        <b>Drop a photo here</b>
+        <span class="faint">or click to choose · you can also paste</span>
+      </label>
+      <div class="pl-stage checker" id="stage" hidden>
+        <div class="pl-in" id="stageIn">
+          <canvas id="pic" aria-label="Your image. Hover to magnify, click to pick a color."></canvas>
+          <canvas id="loupe" width="132" height="132" hidden></canvas>
+        </div>
+      </div>
+      <div class="row" id="hoverRow" hidden>
+        <span class="pl-dot" id="hoverDot"></span><span class="mono" id="hoverHex">—</span>
+        <span class="faint">Hover to magnify · click to pick and copy</span>
+      </div>
+      <div id="pickedBox" hidden>
+        <div class="row between"><h2>Picked <small>click to copy</small></h2><button class="btn ghost small" id="clearPicked">Clear</button></div>
+        <div class="pl-picked" id="picked"></div>
+      </div>
+    </section>
+
+    <section class="card stack">
+      <div class="row between">
+        <h2>Palette</h2>
+        <div class="seg" id="method" role="group" aria-label="Method">
+          <button aria-pressed="true" data-v="kmeans">K-means</button>
+          <button aria-pressed="false" data-v="median">Median cut</button>
+        </div>
+      </div>
+      <label class="field"><span class="row between"><span>Colors</span><output class="mono" id="nv">6</output></span>
+        <input type="range" id="count" min="5" max="12" value="6">
+      </label>
+      <div class="empty" id="empty"><b>No image yet</b>Drop a photo and its main colors appear here, biggest share first.</div>
+      <div class="pl-swatches" id="swatches"></div>
+
+      <div id="exportBox" hidden class="stack">
+        <div class="row between">
+          <div class="seg" id="fmt" role="group" aria-label="Export format">
+            <button aria-pressed="true" data-v="css">CSS</button>
+            <button aria-pressed="false" data-v="json">JSON</button>
+          </div>
+          <div class="row">
+            <button class="btn small" id="copyOut"><svg class="i"><use href="#i-copy"/></svg>Copy</button>
+            <button class="btn small" id="saveOut"><svg class="i"><use href="#i-download"/></svg>File</button>
+            <button class="btn small primary" id="savePng"><svg class="i"><use href="#i-image"/></svg>PNG strip</button>
+          </div>
+        </div>
+        <pre class="out" id="out"></pre>
+      </div>
+    </section>
+  </div>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
